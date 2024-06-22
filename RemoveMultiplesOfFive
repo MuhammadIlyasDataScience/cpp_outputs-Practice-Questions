@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+/*  Q- Write a function that accepts an integer array and its size and returns a new array on
+	the heap with all the elements of the original array except the multiples of 5. The size of
+	the new array is returned via a reference perimeter m.
+	The function header is given below:
+	int * removeMul5(int * A, int n, int & m){
+*/
+int* removeMul5(int* A, int n, int& m) {
+
+	int count = 0;
+	for (int i = 0; i < n; i++) {
+		if (A[i] % 5 != 0)
+			count++;
+	}
+	m = count;
+	int* temp = new int[m];
+	for (int i = 0,j=0; i < m; i++) {
+		if (j<n && A[j] % 5 != 0)
+			temp[i] = A[j];
+		else {
+			j++;
+			for (int k = j; k < n; k++) {
+				if (A[k] % 5 != 0 ) {
+					temp[i] = A[k];
+					break;
+				}
+			}
+		}
+		j++;
+	}
+	return temp;
+}
+
+void display(int size, int* temp) {
+
+	for (int i = 0; i < size; i++) {
+		cout << "Element at index " << i << ": " << temp[i] << endl;
+	}
+
+}
+
+
+int main() {
+
+	cout << "***********************************************\n";
+	int size;
+	cout << "Enter size: ";
+
+
+	do {
+		cin >> size;
+	} while (size<1);
+	cout << "***********************************************\n";
+
+
+	cout << "\n\n*********************************************\n";
+	int* ptr = new int[size];
+	for (int i = 0; i < size; i++) {
+		cout << "Enter element for index " << i << ": ";
+		cin >> ptr[i];
+	}
+	cout << "*************************************************\n\n";
+	display(size, ptr);
+
+	int modifSize = 0;
+	int* returnPtr=removeMul5(ptr, size,modifSize);
+	cout << "**************************************************\n";
+	cout << "Size of modified new array is: " << modifSize << endl;
+	cout << "*****************************************************\n\n";
+	display(modifSize, returnPtr);
+	cout << "******************************************************\n\n";
+	delete[]returnPtr;
+}
